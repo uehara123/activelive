@@ -11,9 +11,7 @@ window.addEventListener('load', function () {
   else {
     Ycreate()
     document.querySelector('#Youtube').addEventListener('click', () => {
-      chrome.identity.getAuthToken({ interactive: true }, function (token) {
-        localStorage.setItem('Youtube_token', token);
-      })
+      Yoauth()
     })
   }
 

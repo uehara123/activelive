@@ -23,7 +23,7 @@ let main = document.createElement('div')
 main.setAttribute('class', 'main')
 wapper[0].insertBefore(main, wapper.firstChild)
 
-//streaddata保存領域
+//streagedata保存領域
 let array = {}
 
 function Ycreate() {
@@ -42,8 +42,9 @@ function Ycreate() {
 
 function Yoauth() {
     chrome.identity.getAuthToken({ interactive: true }, function (token) {
-        console.log(token);
         localStorage.setItem('Youtube_token', token);
+        // reloadメソッドによりページをリロード
+        window.location.reload()
     })
 }
 
@@ -68,6 +69,8 @@ function Toauth() {
         var url = responseUrl
         var access_token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
         localStorage.setItem('Twitch_token', access_token);
+        // reloadメソッドによりページをリロード
+        window.location.reload()
     })
 }
 
@@ -155,6 +158,10 @@ function streamcreate() {
         //配信情報を表示する大枠
         let stream = document.createElement('div')
         stream.setAttribute('class', 'element-container')
+        stream.dataset.href = stream_data[key].url
+        stream.addEventListener('click', () => {
+            open(stream_data[key].url)
+        })
         let main = document.getElementsByClassName('elements')
         main[0].appendChild(stream)
 
