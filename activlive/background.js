@@ -1,63 +1,45 @@
-// //streaddata保存領域
-// let array = {}
+//twtichのwebsocketを試す イベントをlogで出している
+let socket = new WebSocket("wss://eventsub-beta.wss.twitch.tv/ws")
 
-// //フォローしている配信者の配信状況を取得
-// function collAPI() {
-//     const json = coll()
-//     if ('Twitch_token' in localStorage) {
-//         const res = fetch("https://api.twitch.tv/helix/streams/followed?user_id=" + json.user_id, {
-//             headers: {
-//                 'Authorization': 'Bearer ' + localStorage.getItem("Twitch_token"),
-//                 'Client-Id': json.client_id
-//             }
-//         })
-//         //promise11を分解
-//         //フォローリスト
-//         const streams = res.json()
-//         //特定の配信者
-//         const livedata = streams.data
-//         //配信中の人数
-//         const length = livedata.length
+socket.onopen = function (event) {
+    console.log("[open] Connection established")
+    console.log("Sending to server")
+    //socket.sendで送りたいメッセージを送る
+    // socket.send()
+}
 
-//         for (i = 0; i < length; i++) {
-//             //画像の大きさを指定
-//             let thumbnail = livedata[i].thumbnail_url
-//             const thumbnail_width = thumbnail.replace('{width}', '640');
-//             const thumbnail_height = thumbnail_width.replace('{height}', '360');
-//             thumbnail = thumbnail_height
+socket.onmessage = function (event) {
+    console.log(`[message] Data received from server: ${event.data}`)
+}
 
-//             //配列に入れる配信情報
-//             const channelname = livedata[i].user_name
-//             const channelURL = 'https://www.twitch.tv/' + channelname
+socket.onclose = function (event) {
+    if (event.wasClean) {
+        console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`)
+    } else {
+        // e.g. サーバのプロセスが停止、あるいはネットワークダウン
+        // この場合、event.code は通常 1006 になります
+        console.log('[close] Connection died')
+    }
+}
 
-//             array[channelURL] = {
-//                 category: livedata[i].game_name, thumbnail_url: thumbnail,
-//                 title: livedata[i].title, user_name: livedata[i].user_name, url: channelURL,
-//             }
-//             //localStrageのStreamに保存
-//             localStorage.setItem('stream', JSON.stringify(array))
-//         }
-//     }
-// }
+socket.onerror = function (error) {
+    console.log(`[error] ${error.message}`)
+}
 
-// function coll() {
-//     try {
-//         //fetchでURLにアクセス
-//         const user = fetch("https://id.twitch.tv/oauth2/validate", {
-//             headers: {
-//                 'Authorization': 'OAuth ' + localStorage.getItem("Twitch_token"),
-//             }
-//         })
-//         //200~299のstatusだった場合の処理
-//         if (user.ok) {
-//             const json = user.json();
-//             return json
-//             //それ以外
-//         } else {
-//             localStorage.setItem('stream', JSON.stringify(array))
-//         }
-//         //エラーの場合の処理
-//     } catch (error) {
-//         console.log('Error 発生: ' + error);
-//     }
-// }
+// Service Worker インストール時に実行される
+self.addEventListener('install', (event) => {
+    console.log('service worker install ...')
+})
+
+// Service Worker アクティベート時に実行される
+//scope内のリクエストがフェッチできるようになった
+self.addEventListener('activate', (event) => {
+    console.info('activate', event)
+})
+
+
+//イベントがあった際に実行される
+self.addEventListener('fetch', function(event) {
+    //イベントで起きた処理を表示
+    // console.log('fetch', event.request.url)
+})

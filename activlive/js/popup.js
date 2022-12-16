@@ -37,6 +37,18 @@ main[0].appendChild(elements)
 //localstreageに入れるための空配列
 let array = {}
 
+//serviceWorkerに登録
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/background.js', { scope: '/' })
+        .then(function (reg) {
+            console.log('登録に成功しました。 Scope は ' + reg.scope);
+        }).catch(function (error) {
+            console.log('登録に失敗しました。' + error);
+        });
+}
+
+
+
 function Ycreate() {
     //ボタン画面の追加
     //Youtubeボタンの追加
@@ -123,7 +135,7 @@ async function collAPI() {
             localStorage.setItem('stream', JSON.stringify(array))
         }
 
-        if(localStorage.getItem( "stream" ) != "{}"){
+        if (localStorage.getItem("stream") != "{}") {
             streamcreate(data())
         }
     }
@@ -240,6 +252,6 @@ function streamcreate(data) {
 //localstrageの中身を返す
 function data() {
     const data = localStorage.getItem('stream')
-    let array = JSON.parse(data);
+    let array = JSON.parse(data)
     return array
 }
