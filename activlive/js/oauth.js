@@ -19,7 +19,6 @@ window.addEventListener('load', function () {
   //ログイン済みの場合APIからデータを取得し表示
   if ('Twitch_token' in this.localStorage) {
     collAPI()
-    streamcreate()
   }
   //oauth処理
   else {
@@ -28,4 +27,6 @@ window.addEventListener('load', function () {
       Toauth()
     })
   }
+
+
 })

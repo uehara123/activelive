@@ -23,7 +23,7 @@ let main = document.createElement('div')
 main.setAttribute('class', 'main')
 wapper[0].insertBefore(main, wapper.firstChild)
 
-//streagedata保存領域
+//localstreageに入れるための空配列
 let array = {}
 
 function Ycreate() {
@@ -125,6 +125,10 @@ async function collAPI() {
             //localStrageのStreamに保存
             localStorage.setItem('stream', JSON.stringify(array))
         }
+
+        if(localStorage.getItem( "stream" ) != "{}"){
+            streamcreate(data())
+        }
     }
 }
 
@@ -150,17 +154,16 @@ async function coll() {
     }
 }
 
-function streamcreate() {
-    const stream_data = data()
+function streamcreate(data) {
     var i = 0
 
-    for (key in stream_data) {
+    for (key in data) {
         //配信情報を表示する大枠
         let stream = document.createElement('div')
         stream.setAttribute('class', 'element-container')
-        stream.dataset.href = stream_data[key].url
+        stream.dataset.href = data[key].url
         stream.addEventListener('click', () => {
-            open(stream_data[key].url)
+            open(data[key].url)
         })
         let main = document.getElementsByClassName('elements')
         main[0].appendChild(stream)
@@ -181,7 +184,7 @@ function streamcreate() {
         let child = children[i].querySelector('.element')
         child.appendChild(element)
 
-        //画像を挿入枠
+        //画像の挿入枠
         element = document.createElement('div')
         element.setAttribute('class', 'image-field-container')
         main = document.querySelector('.elements')
@@ -190,9 +193,8 @@ function streamcreate() {
         child.appendChild(element)
 
         //画像
-        const image = stream_data[key].thumbnail_url
         element = document.createElement('img')
-        element.src = image
+        element.src = data[key].thumbnail_url
         element.setAttribute('class', 'image-thubnail')
         main = document.querySelector('.elements')
         children = main.children;
@@ -210,7 +212,7 @@ function streamcreate() {
         //配信者名
         element = document.createElement('p')
         element.setAttribute('class', 'name')
-        element.innerHTML = stream_data[key].user_name
+        element.innerHTML = data[key].user_name
         main = document.querySelector('.elements')
         children = main.children;
         child = children[i].querySelector('.infomation-field')
@@ -219,7 +221,7 @@ function streamcreate() {
         //配信タイトル
         element = document.createElement('p')
         element.setAttribute('class', 'title')
-        element.innerHTML = stream_data[key].title
+        element.innerHTML = data[key].title
         main = document.querySelector('.elements')
         children = main.children;
         child = children[i].querySelector('.infomation-field')
@@ -228,7 +230,7 @@ function streamcreate() {
         //ゲーム名
         element = document.createElement('p')
         element.setAttribute('class', 'game-title')
-        element.innerHTML = stream_data[key].category
+        element.innerHTML = data[key].category
         main = document.querySelector('.elements')
         children = main.children;
         child = children[i].querySelector('.infomation-field')
