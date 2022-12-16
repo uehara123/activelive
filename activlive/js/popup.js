@@ -23,6 +23,17 @@ main = document.createElement('div')
 main.setAttribute('class', 'main')
 wapper[0].insertBefore(main, wapper.firstChild)
 
+//scroll部分を生成
+const scroll = document.createElement('div')
+scroll.setAttribute('class', 'scroll')
+main = document.getElementsByClassName('main');
+main[0].appendChild(scroll)
+//スクロール下に枠を生成
+const elements = document.createElement('div')
+elements.setAttribute('class', 'elements')
+main = document.getElementsByClassName('scroll');
+main[0].appendChild(elements)
+
 //localstreageに入れるための空配列
 let array = {}
 
@@ -73,18 +84,6 @@ function Toauth() {
         window.location.reload()
     })
 }
-
-
-//scroll部分を生成
-const scroll = document.createElement('div')
-scroll.setAttribute('class', 'scroll')
-main = document.getElementsByClassName('main');
-main[0].appendChild(scroll)
-//スクロール下に枠を生成
-const elements = document.createElement('div')
-elements.setAttribute('class', 'elements')
-main = document.getElementsByClassName('scroll');
-main[0].appendChild(elements)
 
 //フォローしている配信者の配信状況を取得
 async function collAPI() {
