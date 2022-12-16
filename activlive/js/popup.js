@@ -19,7 +19,7 @@ reload.setAttribute('class', 'reload')
 reload_container.insertBefore(reload, wapper.firstChild)
 
 //メイン画面の追加
-let main = document.createElement('div')
+main = document.createElement('div')
 main.setAttribute('class', 'main')
 wapper[0].insertBefore(main, wapper.firstChild)
 
@@ -74,19 +74,17 @@ function Toauth() {
     })
 }
 
-function scroll() {
-    let scroll = document.createElement('div')
-    scroll.setAttribute('class', 'scroll')
-    let main = document.getElementsByClassName('main');
-    main[0].appendChild(scroll)
-}
 
-function element() {
-    let elements = document.createElement('div')
-    elements.setAttribute('class', 'elements')
-    let main = document.getElementsByClassName('scroll');
-    main[0].appendChild(elements)
-}
+//scroll部分を生成
+const scroll = document.createElement('div')
+scroll.setAttribute('class', 'scroll')
+main = document.getElementsByClassName('main');
+main[0].appendChild(scroll)
+//スクロール下に枠を生成
+const elements = document.createElement('div')
+elements.setAttribute('class', 'elements')
+main = document.getElementsByClassName('scroll');
+main[0].appendChild(elements)
 
 //フォローしている配信者の配信状況を取得
 async function collAPI() {

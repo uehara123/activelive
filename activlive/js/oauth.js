@@ -1,7 +1,5 @@
 //画面を読み込んだ際の処理
 window.addEventListener('load', function () {
-  scroll()
-  element()
   //youtubeのログイン処理
   //ログイン済みの場合APIからデータを取得し表示
   if ('Youtube_token' in this.localStorage) {
